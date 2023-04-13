@@ -1,0 +1,9 @@
+{
+  "name": "tor-addr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "node-fetch": "^2.6.9"
+  }
+}
