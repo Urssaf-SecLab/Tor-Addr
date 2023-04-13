@@ -1,0 +1,37 @@
+name: Never Be Late
+
+on:
+  schedule:
+  - cron: "20 * * * *"
+  push:
+    branches:
+    - main
+    
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  executeMe:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: linhbn123/rebase-pull-requests@v1.0.1
+      # Git Clone the repro to the container
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'npm'
+      - run: npm i
+
+      - name: Run pipe
+        run: node main.js
+
+      # Push the new repro
+      - uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: 'main' 
